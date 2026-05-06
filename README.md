@@ -1,63 +1,76 @@
-# GDoQ: Web Server for GlmU Inhibitor Prediction
+# GlycoEP: In silico Platform for Prediction of Glycosites
 
-Welcome to the official repository and documentation overview for **GDOQ**, an open-source platform designed for predicting the inhibitory activity ($IC_{50}$) of chemical compounds against the bacterial target **GlmU protein**[cite: 3]. GlmU is a bifunctional enzyme essential for the survival of pathogens like *Mycobacterium tuberculosis*, making it a critical target for developing new drugs to fight antibiotic resistance[cite: 3].
+Welcome to the official repository and documentation overview for **GlycoEP**, an open-access web server designed for the accurate prediction of N-, O-, and C-linked glycosites in eukaryotic protein sequences. Glycosylation is a critical post-translational modification involved in protein folding, cell-cell interactions, and host-pathogen recognition. GlycoEP was developed to provide biologists with a more robust tool for identifying these sites using high-quality, non-redundant datasets.
 
-**Web Server:** [(https://webs.iiitd.edu.in/raghava/gdoq/)]
+**Web Server:** [(https://webs.iiitd.edu.in/raghava/glycoep/suppli.html)]
 
 ---
 
 ## Citation
 
-Singla, D., Anurag, M., Dash, D., & Raghava, G. P. S. (2011). 
-**A web server for predicting inhibitors against bacterial target GlmU protein.** 
-*BMC Pharmacology*, 11, 5. 
-[https://doi.org/10.1186/1471-2210-11-5](https://doi.org/10.1186/1471-2210-11-5)
+Chauhan JS, Rao A, Raghava GPS (2013).
+**In silico Platform for Prediction of N-, O- and C-Glycosites in Eukaryotic Protein Sequences.**
+*PLoS ONE* 8(6): e67008.
+[https://doi.org/10.1371/journal.pone.0067008](https://doi.org/10.1371/journal.pone.0067008)
 
 ---
 
 ## About the Platform
 
-GDOQ was developed to assist researchers in identifying novel inhibitors for the GlmU protein, particularly in the context of drug-resistant tuberculosis. The platform utilizes Quantitative Structure-Activity Relationship (**QSAR**) models and **docking** techniques to predict the effectiveness of potential drug candidates.
+GlycoEP addresses the limitations of existing glycosylation prediction tools by utilizing larger, more stringently filtered datasets and advanced machine-learning techniques[cite: 1]. The platform supports the prediction of three major types of eukaryotic glycosylation:
 
-The platform's models are built on:
-*   **Experimental Data**: A training set of 84 diverse GlmU inhibitors retrieved from PubChem BioAssay (AID 1376).
-*   **Structural Modeling**: Site-specific docking against the $GlmU_{ecoli}$ crystal structure (PDB ID: 2O16).
-*   **Comprehensive Descriptors**: Integration of docking energies, topological descriptors, and physiological descriptors.
+*   **N-linked**: Attachment to the Nitrogen atom of Asparagine (Asn) in the $Asn-X-Ser/Thr$ sequon.
+*   **O-linked**: Attachment to Serine (Ser) or Threonine (Thr) residues.
+*   **C-linked**: Attachment to the first Tryptophan (Trp) in motifs like $W-X-X-W$.
+
+The server offers two tiers of prediction models:
+1.  **Standard Models**: Developed from non-redundant proteins where no two sequences share more than **40% similarity**.
+2.  **Advanced Models**: Developed from highly non-redundant pattern datasets where no two glycosite patterns share more than **60% similarity**, ensuring more robust and biologically meaningful predictions.
 
 ---
 
 ## Key Features
 
 ### Predictive Modeling
-*   **Hybrid QSAR Models**: Combines molecular descriptors from software like V-life, Web-Cdk, and Dragon with docking energy descriptors.
-*   **High Performance**: Achieved a maximum correlation of $r=0.83$ ($r^2=0.70$) between predicted and actual $pIC_{50}$ values using hybrid models.
-*   **Validation**: Models were optimized using Support Vector Machines (SVM), Multiple Linear Regression (MLR), and SMOreg.
+*   **Machine Learning**: Support Vector Machine (SVM) was identified as the optimum tool for these models, utilizing the RBF kernel.
+*   **High Accuracy**: Advanced SVM models achieved accuracies of **84.26%** for N-linked, **86.87%** for O-linked, and **91.43%** for C-linked glycosites.
+*   **Feature Integration**: Models incorporate Binary Profiles of Patterns (BPP), Composition Profiles (CPP), and PSSM profiles (PPP).
+
+### Structural Information
+*   **Secondary Structure**: Incorporates three-state structure information (Coil, Helix, Strand) obtained via PSIPRED.
+*   **Surface Accessibility**: Includes Predicted Accessible Surface Area (ASA) values, which significantly improve O-glycosite prediction.
 
 ### Built-in Tools
-*   **Molecule Submission**: Users can draw structures using a JME editor, paste molecules in mol/mol2 format, or upload files directly.
-*   **Interactive Results**: Predicts $IC_{50}$ values and provides interactive visualizations of the bound ligand within the GlmU protein.
-*   **Lipinski Analysis**: Evaluates compounds based on the Lipinski rule of five to ensure drug-likeness.
-
-### Data Resources
-*   **Screened Libraries**: Contains lists of predicted potential GlmU inhibitors from anti-infective and substrate-similar compound libraries.
-*   **Conservation Mapping**: Multiple sequence alignment highlighting conserved active site residues across different bacterial species[cite: 3].
+*   **Sequon Scanner**: A dedicated tool to scan input protein sequences for both universal and rare N-linked glycosylation motifs.
+*   **Multiple Submissions**: The server allows users to submit multiple sequences simultaneously for high-throughput analysis.
 
 ---
 
 ## Overview of Model Development
 
-GDOQ utilizes three primary types of descriptors to ensure accuracy[cite: 3]:
-1.  **Docking Energy Descriptors**: Includes free energy, VdW + Hbond + desolv Energy, and electrostatic energy from AutoDock.
-2.  **Molecular Descriptors**: Calculated using V-Life MDS 2.0 (1576 descriptors) and Web-Cdk (178 descriptors).
-3.  **Hybrid Descriptors**: Integration of the above to encapsulate more chemical and biological information.
+GlycoEP models were trained and evaluated using a 5-fold cross-validation procedure. The datasets were derived from the SWISS-PROT database (June 2011 release), focusing exclusively on experimentally verified eukaryotic glycoproteins. Overlapping patterns of **21 residues** were generated for each potential glycosite to capture the local sequence context.
+
+| Feature | N-linked | O-linked | C-linked |
+| :--- | :--- | :--- | :--- |
+| **Primary Motif** | $Asn-X-Ser/Thr$ | Ser/Thr (no consensus) | $W-X-X-W/C/F$ |
+| **Advanced Accuracy** | 84.24% | 86.87% | 91.43% |
+| **MCC (Advanced)** | 0.54 | 0.20 | 0.78 |
 
 ---
 
 ## Applications
 
-*   **Drug Discovery**: Narrowing down time and cost by screening chemical libraries for potential tuberculosis treatments.
-*   **Target Characterization**: Understanding protein-ligand interactions at the C-terminal domain of GlmU.
-*   **Open Source Bioinformatics**: Promoting the use of freely available software in computer-aided drug discovery.
+*   **Proteomics**: Characterization and annotation of glycosites in eukaryotic proteins.
+*   **Therapeutics**: Analysis of human therapeutic glycoproteins, which constitute over 70% of current protein-based drugs.
+*   **Biological Research**: Investigating the role of glycans in protein folding, cell signaling, and host-pathogen interactions.
+
+---
+
+## Documentation & References
+
+For detailed information regarding methodology, dataset generation, and performance metrics, please refer to the following local documentation:
+*   `GlycoEP.pdf`: Full text of the original publication.
+*   `gemini-code-1778069710488.md`: Technical specifications and supplemental data.
 
 ---
 
