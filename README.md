@@ -66,13 +66,6 @@ GlycoEP models were trained and evaluated using a 5-fold cross-validation proced
 
 ---
 
-## Documentation & References
-
-For detailed information regarding methodology, dataset generation, and performance metrics, please refer to the following local documentation:
-*   `GlycoEP.pdf`: Full text of the original publication.
-*   `gemini-code-1778069710488.md`: Technical specifications and supplemental data.
-
----
 
 ## Contact & Authors
 
