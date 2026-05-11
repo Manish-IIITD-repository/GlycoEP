@@ -13,6 +13,8 @@ Chauhan JS, Rao A, Raghava GPS (2013).
 *PLoS ONE* 8(6): e67008.
 [https://doi.org/10.1371/journal.pone.0067008](https://doi.org/10.1371/journal.pone.0067008)
 
+Zenodo:-(https://doi.org/10.5281/zenodo.20063245)
+
 ---
 
 ## About the Platform
